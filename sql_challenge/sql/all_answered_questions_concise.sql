@@ -54,7 +54,7 @@ where continent_name is not null
 order by year, continent_name; -- excluding null continents 
 
 -- Question 5 
-with test as (
+with continents_v2 as (
     select 
         year, 
         continent_name, 
@@ -72,7 +72,7 @@ with test as (
 )
 
 select  year, continent_name, avg(gdp_per_capita) as median
-from test
+from continents_v2
 where row_id between ct/2.0 and ct/2.0 + 1 
 group by year, continent_name;
 
