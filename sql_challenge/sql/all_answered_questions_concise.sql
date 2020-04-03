@@ -46,6 +46,14 @@ As final_result(year smallint, North_America numeric, Europe numeric, Rest_of_th
 where year = 2012; 
 
 -- Question 4
+Select  distinct year,  continent_name, round(avg(gdp_per_capita) over(partition by year, continent_name order by year, continent_name)) as avg_gdp
+from country_gdp 
+left join continent_map cm on cm.country_code = country_gdp.country_code
+left join continents cn on cn.continent_code = cm.continent_code
+where continent_name is not null 
+order by year, continent_name; -- excluding null continents 
+
+-- Question 5 
 with test as (
     select 
         year, 
@@ -68,4 +76,3 @@ from test
 where row_id between ct/2.0 and ct/2.0 + 1 
 group by year, continent_name;
 
--- Question 5 
